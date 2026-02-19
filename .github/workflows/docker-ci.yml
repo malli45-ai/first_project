@@ -27,7 +27,7 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/app-name:latest 
   
   deploy-qa:
-    needs: test
+    needs: build-and-push
     runs-on: ubuntu-latest
     environment: qa
     steps:
@@ -37,7 +37,8 @@ jobs:
           # kubectl apply -f k8s/qa/
           # OR docker pull + docker run
   deploy-prod:
-    needs: deploy-qa
+    needs: build-and-push
+
     runs-on: ubuntu-latest
     environment: production
 
