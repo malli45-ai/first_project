@@ -25,3 +25,26 @@ jobs:
 
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/app-name:latest 
+  
+  deploy-qa:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: qa
+    steps:
+      - name: Deploy to QA
+        run: |
+          echo "Deploying to QA server"
+          # kubectl apply -f k8s/qa/
+          # OR docker pull + docker run
+  deploy-prod:
+    needs: deploy-qa
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to Production server"
+          # kubectl apply -f k8s/prod/
+   
+
