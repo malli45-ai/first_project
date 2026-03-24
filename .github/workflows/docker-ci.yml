@@ -21,10 +21,10 @@ jobs:
           
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/app-name:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/app-name:${{ github.sha }} .
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/app-name:latest 
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/app-name:${{ github.sha }}
   
   deploy-qa:
     needs: build-and-push
